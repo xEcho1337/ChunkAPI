@@ -1,17 +1,65 @@
 package net.echo.chunkapi;
 
+import de.tr7zw.changeme.nbtapi.NBT;
+import net.echo.chunkapi.editor.ChunkEditor;
+import net.echo.chunkapi.schematic.SchematicLoader;
+import net.echo.chunkapi.workload.ChunkWorkload;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class ChunkAPI extends JavaPlugin {
+public final class ChunkAPI {
 
-    @Override
-    public void onEnable() {
-        // Plugin startup logic
+    private final ChunkWorkload chunkWorkload;
+    private final SchematicLoader schematicLoader;
 
+    private ChunkAPI(JavaPlugin plugin, ChunkAPIOptions options) {
+        if (!NBT.preloadApi()) {
+            plugin.getLogger().warning("NBT-API wasn't initialized properly!");
+        }
+
+        this.schematicLoader = new SchematicLoader(this);
+        this.chunkWorkload = new ChunkWorkload(options.getMaxMsPerTick());
+
+        Bukkit.getScheduler().runTaskTimer(plugin, chunkWorkload, 0, options.getMaxMsPerTick());
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    /**
+     * Creates an instance of the API.
+     * @param plugin the parent plugin
+     */
+    public static ChunkAPI create(JavaPlugin plugin) {
+        return new ChunkAPI(plugin, new ChunkAPIOptions());
+    }
+
+    /**
+     * Creates an instance of the API.
+     * @param plugin the parent plugin
+     * @param options the options of the API
+     */
+    public static ChunkAPI create(JavaPlugin plugin, ChunkAPIOptions options) {
+        return new ChunkAPI(plugin, options);
+    }
+
+    /**
+     * Returns a chunk editor for the given world.
+     * @param world the world
+     */
+    public ChunkEditor getChunkEditor(World world) {
+        return new ChunkEditor(this, world);
+    }
+
+    /**
+     * Returns the chunk workload.
+     */
+    public ChunkWorkload getChunkWorkload() {
+        return chunkWorkload;
+    }
+
+    /**
+     * Returns the schematic loader.
+     */
+    public SchematicLoader getSchematicLoader() {
+        return schematicLoader;
     }
 }
