@@ -35,6 +35,7 @@ public class ChunkEditor {
 
     /**
      * Updates a block at a given position to a given type.
+     * This method ignores AIR blocks for performance.
      *
      * @param x the block x position
      * @param y the block y position
@@ -45,11 +46,32 @@ public class ChunkEditor {
         setBlock(x, y, z, material.getId() << 4);
     }
 
+    /**
+     * Updates a block at a given position to the given type.
+     * This method ignores AIR blocks for performance.
+     *
+     * @param x the block x position
+     * @param y the block y position
+     * @param z the block z position
+     * @param combinedId the combined id of the block
+     */
     public void setBlock(int x, int y, int z, int combinedId) {
+        if (combinedId == 0) return; // Ignore air, useless
+
         chunkAPI.getChunkWorkload().addTask(() -> setBlockUsingNMS(x, y, z, combinedId));
     }
 
-    // TODO: do not set block if the chunk is a new generated chunk, as by default it will be all air
+    /**
+     * Updates a block at a given position to air.
+     *
+     * @param x the block x position
+     * @param y the block y position
+     * @param z the block z position
+     */
+    public void setAir(int x, int y, int z) {
+        chunkAPI.getChunkWorkload().addTask(() -> setBlockUsingNMS(x, y, z, 0));
+    }
+
     private void setBlockUsingNMS(int x, int y, int z, int combinedId) {
         CraftWorld craftWorld = (CraftWorld) world;
         WorldServer nmsWorld = craftWorld.getHandle();
