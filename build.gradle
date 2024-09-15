@@ -61,6 +61,8 @@ processResources {
 
 shadowJar {
     relocate("de.tr7zw.changeme.nbtapi", "net.echo.chunkapi")
+
+    archiveFileName = "ChunkAPI-" + version + ".jar"
 }
 
 build {
