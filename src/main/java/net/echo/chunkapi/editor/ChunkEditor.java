@@ -2,9 +2,8 @@ package net.echo.chunkapi.editor;
 
 import net.echo.chunkapi.ChunkAPI;
 import net.minecraft.server.v1_8_R3.*;
-import net.minecraft.server.v1_8_R3.Chunk;
-import org.bukkit.World;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.util.LongHash;
 

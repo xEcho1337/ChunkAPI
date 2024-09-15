@@ -1,8 +1,5 @@
 package net.echo.chunkapi.workload;
 
-import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
@@ -24,15 +21,9 @@ public class ChunkWorkload implements Runnable {
         long start = System.nanoTime();
         long maxNanos = (long) (maxMsPerTick * 1e6);
 
-        int initialSize = tasks.size();
-
         while (!tasks.isEmpty() && System.nanoTime() - start < maxNanos) {
             Objects.requireNonNull(tasks.poll()).run();
         }
-
-        int finalSize = tasks.size();
-
-        System.out.println("Updated " + (initialSize - finalSize) + " chunks in " + (System.nanoTime() - start) / 1e6 + "ms");
     }
 
     /**
