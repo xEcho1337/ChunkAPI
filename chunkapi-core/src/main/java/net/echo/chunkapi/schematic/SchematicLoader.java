@@ -1,27 +1,18 @@
 package net.echo.chunkapi.schematic;
 
-import net.echo.chunkapi.ChunkAPI;
-import net.echo.chunkapi.editor.ChunkEditor;
+import net.echo.chunkapi.api.ChunkEditor;
 import org.bukkit.World;
 
 import java.io.File;
 import java.io.IOException;
 
-public class SchematicLoader {
+public interface SchematicLoader {
 
-    private final ChunkAPI chunkAPI;
-    private Schematic schematic;
+    void load(File file) throws IOException;
 
-    public SchematicLoader(ChunkAPI chunkAPI) {
-        this.chunkAPI = chunkAPI;
-    }
-
-    public void loadSchematic(File file) throws IOException {
-        this.schematic = new Schematic(file);
-    }
-
-    public void startPrinting(World world, int baseX, int baseY, int baseZ) {
-        ChunkEditor editor = chunkAPI.getChunkEditor(world);
+    default void print(World world, int baseX, int baseY, int baseZ) {
+        ChunkEditor<?, ?> editor = getChunkEditor(world);
+        Schematic schematic = getSchematic();
 
         for (int x = 0; x < schematic.getWidth(); x++) {
             for (int y = 0; y < schematic.getHeight(); y++) {
@@ -37,4 +28,8 @@ public class SchematicLoader {
             }
         }
     }
+
+    ChunkEditor<?, ?> getChunkEditor(World world);
+
+    Schematic getSchematic();
 }

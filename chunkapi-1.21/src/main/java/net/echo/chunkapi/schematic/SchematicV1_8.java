@@ -5,14 +5,14 @@ import de.tr7zw.changeme.nbtapi.NBTFile;
 import java.io.File;
 import java.io.IOException;
 
-public class Schematic {
+public class SchematicV1_8 implements Schematic {
 
     private int[] blocks;
     private int width; // X-axis
     private int height; // Y-axis
     private int length; // Z-axis
 
-    public Schematic(File file) throws IOException {
+    public SchematicV1_8(File file) throws IOException {
         load(file);
     }
 
@@ -20,7 +20,7 @@ public class Schematic {
         return (y * length + z) * width + x;
     }
 
-    private void load(File file) throws IOException {
+    public void load(File file) throws IOException {
         NBTFile nbtFile = new NBTFile(file);
 
         this.width = nbtFile.getInteger("Width");
@@ -50,14 +50,6 @@ public class Schematic {
         }
     }
 
-    /**
-     * Gets a block from the given position.
-     *
-     * @param x should never be bigger than <code>getWidth() - 1</code>
-     * @param y should never be bigger than <code>getHeight() - 1</code>
-     * @param z should never be bigger than <code>getLength() - 1</code>
-     * @return the combined id of the block, encoded as <code>(blockId << 4 | data)</code>
-     */
     public int getBlockAt(int x, int y, int z) {
         if (x < 0 || x >= width || y < 0 || y >= height || z < 0 || z >= length) {
             throw new IllegalArgumentException("Coordinates (" + x + ", " + y + ", " + z + ") are out of bounds for " +
@@ -67,30 +59,18 @@ public class Schematic {
         return blocks[coordinatesToIndex(x, y, z)];
     }
 
-    /**
-     * Gets the block list of the schematic.
-     */
     public int[] getBlocks() {
         return blocks;
     }
 
-    /**
-     * Returns the X-axis width of the schematic.
-     */
     public int getWidth() {
         return width;
     }
 
-    /**
-     * Returns the Y-axis height of the schematic.
-     */
     public int getHeight() {
         return height;
     }
 
-    /**
-     * Returns the Z-axis length of the schematic.
-     */
     public int getLength() {
         return length;
     }
