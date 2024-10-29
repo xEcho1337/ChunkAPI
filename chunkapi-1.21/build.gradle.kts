@@ -16,9 +16,7 @@ java {
 
 tasks {
     shadowJar {
-        archiveBaseName.set("chunkapi-1.21")
-        archiveClassifier.set("")
-        archiveVersion.set("")
+        archiveFileName.set("chunkapi-1.21.jar")
 
         relocate("de.tr7zw", "net.echo.chunkapi.relocated.tr7zw")
     }

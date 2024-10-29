@@ -14,6 +14,10 @@ allprojects {
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://oss.sonatype.org/content/groups/public/")
     }
+
+    tasks.withType<Jar> {
+        destinationDirectory.set(file("$rootDir/build/libs"))
+    }
 }
 
 tasks {
