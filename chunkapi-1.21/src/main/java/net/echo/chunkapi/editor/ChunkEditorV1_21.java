@@ -4,6 +4,7 @@ import net.echo.chunkapi.ChunkAPI;
 import net.echo.chunkapi.api.ChunkEditor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkSource;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -48,10 +49,10 @@ public class ChunkEditorV1_21 implements ChunkEditor<LevelChunk, BlockState> {
         // If the chunk doesn't exist because no one is loading it, create it
         if (nmsChunk == null) {
             nmsChunk = new LevelChunk(nmsWorld, new ChunkPos(x >> 4, z >> 4));
-            nmsWorld.chunkSource.addLoadedChunk(nmsChunk);
+            nmsWorld.getChunkSource().addLoadedChunk(nmsChunk);
         }
 
-        BlockState data = net.minecraft.world.level.block.Block.stateById(combinedId);
+        BlockState data = Block.stateById(combinedId);
         setBlockOnChunk(nmsChunk, x, y, z, data);
     }
 

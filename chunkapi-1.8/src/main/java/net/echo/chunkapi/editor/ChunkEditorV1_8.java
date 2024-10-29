@@ -8,7 +8,7 @@ import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.util.LongHash;
 
-@SuppressWarnings("all")
+@SuppressWarnings("all") // Intellij Idea STFU
 public class ChunkEditorV1_8 implements ChunkEditor<Chunk, IBlockData> {
 
     private final ChunkAPI chunkAPI;
@@ -51,7 +51,7 @@ public class ChunkEditorV1_8 implements ChunkEditor<Chunk, IBlockData> {
             chunkProvider.chunks.put(chunkId, nmsChunk);
         }
 
-        IBlockData data = net.minecraft.server.v1_8_R3.Block.getByCombinedId(combinedId);
+        IBlockData data = Block.getByCombinedId(combinedId);
         setBlockOnChunk(nmsChunk, x, y, z, data);
     }
 
