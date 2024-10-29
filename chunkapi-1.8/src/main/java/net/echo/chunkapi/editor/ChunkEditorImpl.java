@@ -20,6 +20,11 @@ public class ChunkEditorImpl implements ChunkEditor<Chunk, IBlockData> {
     }
 
     @Override
+    public ChunkAPI getChunkAPI() {
+        return chunkAPI;
+    }
+
+    @Override
     public void setBlock(int x, int y, int z, Material material) {
         setBlock(x, y, z, material.getId() << 4);
     }

@@ -13,6 +13,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
 
+import java.util.concurrent.CompletableFuture;
+
 @SuppressWarnings("all") // Intellij Idea STFU
 public class ChunkEditorImpl implements ChunkEditor<LevelChunk, BlockState> {
 
@@ -24,16 +26,24 @@ public class ChunkEditorImpl implements ChunkEditor<LevelChunk, BlockState> {
         this.world = world;
     }
 
+    @Override
+    public ChunkAPI getChunkAPI() {
+        return chunkAPI;
+    }
+
+    @Override
     public void setBlock(int x, int y, int z, Material material) {
         setBlock(x, y, z, material.getId() << 4);
     }
 
+    @Override
     public void setBlock(int x, int y, int z, int combinedId) {
         if (combinedId == 0) return; // Ignore air, useless
 
         chunkAPI.getChunkWorkload().addTask(() -> setBlockUsingNMS(x, y, z, combinedId));
     }
 
+    @Override
     public void setAir(int x, int y, int z) {
         chunkAPI.getChunkWorkload().addTask(() -> setBlockUsingNMS(x, y, z, 0));
     }

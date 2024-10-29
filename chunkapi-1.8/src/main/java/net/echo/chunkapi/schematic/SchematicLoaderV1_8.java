@@ -21,6 +21,11 @@ public class SchematicLoaderV1_8 implements SchematicLoader {
     }
 
     @Override
+    public ChunkAPI getAPI() {
+        return chunkAPI;
+    }
+
+    @Override
     public ChunkEditor<?, ?> getChunkEditor(World world) {
         return chunkAPI.getChunkEditor(world);
     }
@@ -29,5 +34,4 @@ public class SchematicLoaderV1_8 implements SchematicLoader {
     public Schematic getSchematic() {
         return schematic;
     }
-
 }

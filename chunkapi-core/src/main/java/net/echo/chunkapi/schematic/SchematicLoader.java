@@ -1,16 +1,20 @@
 package net.echo.chunkapi.schematic;
 
+import net.echo.chunkapi.ChunkAPI;
 import net.echo.chunkapi.api.ChunkEditor;
 import org.bukkit.World;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 public interface SchematicLoader {
 
     void load(File file) throws IOException;
 
-    default void print(World world, int baseX, int baseY, int baseZ) {
+    default CompletableFuture<Void> print(World world, int baseX, int baseY, int baseZ) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
         ChunkEditor<?, ?> editor = getChunkEditor(world);
         Schematic schematic = getSchematic();
 
@@ -27,7 +31,13 @@ public interface SchematicLoader {
                 }
             }
         }
+
+        getAPI().getChunkWorkload().addTask(() -> future.complete(null));
+
+        return future;
     }
+
+    ChunkAPI getAPI();
 
     ChunkEditor<?, ?> getChunkEditor(World world);
 
