@@ -5,14 +5,14 @@ import de.tr7zw.changeme.nbtapi.NBTFile;
 import java.io.File;
 import java.io.IOException;
 
-public class SchematicV1_8 implements Schematic {
+public class SchematicV1_20_5 implements Schematic {
 
     private int[] blocks;
     private int width; // X-axis
     private int height; // Y-axis
     private int length; // Z-axis
 
-    public SchematicV1_8(File file) throws IOException {
+    public SchematicV1_20_5(File file) throws IOException {
         load(file);
     }
 

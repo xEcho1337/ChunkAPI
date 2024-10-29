@@ -9,12 +9,12 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.util.LongHash;
 
 @SuppressWarnings("all") // Intellij Idea STFU
-public class ChunkEditorV1_8 implements ChunkEditor<Chunk, IBlockData> {
+public class ChunkEditorImpl implements ChunkEditor<Chunk, IBlockData> {
 
     private final ChunkAPI chunkAPI;
     private final World world;
 
-    public ChunkEditorV1_8(ChunkAPI chunkAPI, World world) {
+    public ChunkEditorImpl(ChunkAPI chunkAPI, World world) {
         this.chunkAPI = chunkAPI;
         this.world = world;
     }

@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     implementation(project(":chunkapi-core"))
-    paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.20.5-R0.1-SNAPSHOT")
 }
 
 java {
@@ -16,7 +16,7 @@ java {
 
 tasks {
     shadowJar {
-        archiveBaseName.set("chunkapi-1.21")
+        archiveBaseName.set("chunkapi-1.20.5")
         archiveClassifier.set("")
         archiveVersion.set("")
 

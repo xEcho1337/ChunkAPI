@@ -2,7 +2,7 @@ package net.echo.chunkapi;
 
 import de.tr7zw.changeme.nbtapi.NBT;
 import net.echo.chunkapi.api.ChunkEditor;
-import net.echo.chunkapi.editor.ChunkEditorV1_8;
+import net.echo.chunkapi.editor.ChunkEditorImpl;
 import net.echo.chunkapi.schematic.SchematicLoader;
 import net.echo.chunkapi.schematic.SchematicLoaderV1_8;
 import net.echo.chunkapi.workload.ChunkWorkload;
@@ -48,7 +48,7 @@ public class ChunkAPI {
      * @param world the world
      */
     public ChunkEditor<?, ?> getChunkEditor(World world) {
-        return new ChunkEditorV1_8(this, world);
+        return new ChunkEditorImpl(this, world);
     }
 
     /**

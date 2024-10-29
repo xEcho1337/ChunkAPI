@@ -14,12 +14,12 @@ import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
 
 @SuppressWarnings("all") // Intellij Idea STFU
-public class ChunkEditorV1_21 implements ChunkEditor<LevelChunk, BlockState> {
+public class ChunkEditorImpl implements ChunkEditor<LevelChunk, BlockState> {
 
     private final ChunkAPI chunkAPI;
     private final World world;
 
-    public ChunkEditorV1_21(ChunkAPI chunkAPI, World world) {
+    public ChunkEditorImpl(ChunkAPI chunkAPI, World world) {
         this.chunkAPI = chunkAPI;
         this.world = world;
     }
@@ -49,7 +49,7 @@ public class ChunkEditorV1_21 implements ChunkEditor<LevelChunk, BlockState> {
         // If the chunk doesn't exist because no one is loading it, create it
         if (nmsChunk == null) {
             nmsChunk = new LevelChunk(nmsWorld, new ChunkPos(x >> 4, z >> 4));
-            nmsWorld.getChunkSource().addLoadedChunk(nmsChunk);
+            nmsWorld.chunkSource.moonrise$setFullChunk(x >> 4, z >> 4, nmsChunk);
         }
 
         BlockState data = Block.stateById(combinedId);

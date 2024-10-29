@@ -4,7 +4,7 @@ import de.tr7zw.changeme.nbtapi.NBT;
 import net.echo.chunkapi.api.ChunkEditor;
 import net.echo.chunkapi.editor.ChunkEditorImpl;
 import net.echo.chunkapi.schematic.SchematicLoader;
-import net.echo.chunkapi.schematic.SchematicLoaderV1_21;
+import net.echo.chunkapi.schematic.SchematicLoaderV1_20_5;
 import net.echo.chunkapi.workload.ChunkWorkload;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -20,7 +20,7 @@ public class ChunkAPI {
             plugin.getLogger().warning("NBT-API wasn't initialized properly!");
         }
 
-        this.schematicLoader = new SchematicLoaderV1_21(this);
+        this.schematicLoader = new SchematicLoaderV1_20_5(this);
         this.chunkWorkload = new ChunkWorkload(options.getMaxMsPerTick());
 
         Bukkit.getScheduler().runTaskTimer(plugin, chunkWorkload, 0, options.getMaxMsPerTick());

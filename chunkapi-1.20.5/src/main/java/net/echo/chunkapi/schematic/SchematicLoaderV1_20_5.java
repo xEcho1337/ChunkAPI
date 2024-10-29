@@ -7,17 +7,17 @@ import org.bukkit.World;
 import java.io.File;
 import java.io.IOException;
 
-public class SchematicLoaderV1_8 implements SchematicLoader {
+public class SchematicLoaderV1_20_5 implements SchematicLoader {
 
     private final ChunkAPI chunkAPI;
     private Schematic schematic;
 
-    public SchematicLoaderV1_8(ChunkAPI chunkAPI) {
+    public SchematicLoaderV1_20_5(ChunkAPI chunkAPI) {
         this.chunkAPI = chunkAPI;
     }
 
     public void load(File file) throws IOException {
-        this.schematic = new SchematicV1_8(file);
+        this.schematic = new SchematicV1_20_5(file);
     }
 
     @Override
