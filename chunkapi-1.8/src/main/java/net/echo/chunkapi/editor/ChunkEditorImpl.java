@@ -1,7 +1,7 @@
 package net.echo.chunkapi.editor;
 
-import net.echo.chunkapi.ChunkAPI;
-import net.echo.chunkapi.api.ChunkEditor;
+import net.echo.common.ChunkAPI;
+import net.echo.common.api.ChunkEditor;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Material;
 import org.bukkit.World;

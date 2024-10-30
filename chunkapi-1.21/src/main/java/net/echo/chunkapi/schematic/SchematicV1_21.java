@@ -2,29 +2,18 @@ package net.echo.chunkapi.schematic;
 
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTFile;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.LinearCongruentialGenerator;
+import net.echo.common.schematic.Schematic;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BlockTypes;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoubleBlockCombiner;
-import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
 import org.bukkit.block.BlockType;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.craftbukkit.block.CraftBlockState;
-import org.bukkit.craftbukkit.block.CraftBlockStates;
 import org.bukkit.craftbukkit.block.CraftBlockType;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class SchematicV1_21 implements Schematic {
 
@@ -46,9 +35,9 @@ public class SchematicV1_21 implements Schematic {
 
         NBTCompound schematic = nbtFile.getCompound("Schematic");
 
-        this.width = schematic.getInteger("Width");
-        this.height = schematic.getInteger("Height");
-        this.length = schematic.getInteger("Length");
+        this.width = schematic.getShort("Width");
+        this.height = schematic.getShort("Height");
+        this.length = schematic.getShort("Length");
 
         this.blocks = new int[width * height * length];
 
@@ -70,7 +59,7 @@ public class SchematicV1_21 implements Schematic {
             paletteMap.put(palette.getInteger(key), stringToBlockData(key));
         }
 
-        byte[] data = nbtFile.getByteArray("Data");
+        byte[] data = blocks.getByteArray("Data");
 
         if (data == null) {
             throw new IOException("Invalid schematic! No data found!");
@@ -81,6 +70,7 @@ public class SchematicV1_21 implements Schematic {
                 for (int z = 0; z < length; z++) {
                     int i = coordinatesToIndex(x, y, z);
 
+                    System.out.println(i + " | " + data.length + " | " + x + " | " + y + " | " + z);
                     int block = data[i];
 
                     assert this.blocks != null;
@@ -92,7 +82,19 @@ public class SchematicV1_21 implements Schematic {
 
     public int stringToBlockData(String input) {
         try {
-            String[] parts = input.split("\\[", 2);
+            String[] parts = input.split("\\[");
+
+            if (parts.length != 2) {
+                Material material = Material.valueOf(input.replace("minecraft:", "").toUpperCase());
+                Block block = CraftBlockType.bukkitToMinecraft(material);
+
+                BlockType blockType = CraftBlockType.minecraftToBukkitNew(block);
+                BlockData blockData = CraftBlockData.newData(blockType, null);
+
+                System.out.println(input + " -> " + blockData.getMaterial().getId());
+                return blockData.getMaterial().getId();
+            }
+
             String type = parts[0].replace("minecraft:", "").toUpperCase();
 
             Material material = Material.valueOf(type);
@@ -101,6 +103,7 @@ public class SchematicV1_21 implements Schematic {
             BlockType blockType = CraftBlockType.minecraftToBukkitNew(block);
             BlockData blockData = CraftBlockData.newData(blockType, parts[1]);
 
+            System.out.println(input + " -> " + blockData.getMaterial().getId());
             return blockData.getMaterial().getId();
         } catch (IllegalArgumentException e) {
             return -1;

@@ -1,7 +1,7 @@
-package net.echo.chunkapi.schematic;
+package net.echo.common.schematic;
 
-import net.echo.chunkapi.ChunkAPI;
-import net.echo.chunkapi.api.ChunkEditor;
+import net.echo.common.ChunkAPI;
+import net.echo.common.api.ChunkEditor;
 import org.bukkit.World;
 
 import java.io.File;

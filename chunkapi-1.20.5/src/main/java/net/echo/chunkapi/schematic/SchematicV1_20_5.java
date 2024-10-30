@@ -1,6 +1,7 @@
 package net.echo.chunkapi.schematic;
 
 import de.tr7zw.changeme.nbtapi.NBTFile;
+import net.echo.common.schematic.Schematic;
 
 import java.io.File;
 import java.io.IOException;

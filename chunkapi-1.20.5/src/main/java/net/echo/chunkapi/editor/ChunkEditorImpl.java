@@ -1,7 +1,7 @@
 package net.echo.chunkapi.editor;
 
-import net.echo.chunkapi.ChunkAPI;
-import net.echo.chunkapi.api.ChunkEditor;
+import net.echo.common.ChunkAPI;
+import net.echo.common.api.ChunkEditor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
@@ -12,8 +12,6 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
-
-import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("all") // Intellij Idea STFU
 public class ChunkEditorImpl implements ChunkEditor<LevelChunk, BlockState> {

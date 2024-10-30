@@ -1,6 +1,6 @@
-package net.echo.chunkapi.api;
+package net.echo.common.api;
 
-import net.echo.chunkapi.ChunkAPI;
+import net.echo.common.ChunkAPI;
 import org.bukkit.Material;
 
 import java.util.concurrent.CompletableFuture;

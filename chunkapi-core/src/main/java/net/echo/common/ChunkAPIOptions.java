@@ -1,4 +1,4 @@
-package net.echo.chunkapi;
+package net.echo.common;
 
 public class ChunkAPIOptions {
 

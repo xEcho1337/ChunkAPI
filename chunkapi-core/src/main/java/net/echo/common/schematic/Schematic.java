@@ -1,4 +1,4 @@
-package net.echo.chunkapi.schematic;
+package net.echo.common.schematic;
 
 import java.io.File;
 import java.io.IOException;

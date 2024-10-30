@@ -1,8 +1,8 @@
-package net.echo.chunkapi;
+package net.echo.common;
 
-import net.echo.chunkapi.api.ChunkEditor;
-import net.echo.chunkapi.schematic.SchematicLoader;
-import net.echo.chunkapi.workload.ChunkWorkload;
+import net.echo.common.api.ChunkEditor;
+import net.echo.common.schematic.SchematicLoader;
+import net.echo.common.workload.ChunkWorkload;
 import org.bukkit.World;
 
 public interface ChunkAPI {

@@ -1,4 +1,4 @@
-package net.echo.chunkapi.workload;
+package net.echo.common.workload;
 
 import java.util.LinkedList;
 import java.util.Objects;
