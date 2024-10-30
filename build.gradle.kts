@@ -34,6 +34,5 @@ subprojects {
 
     dependencies {
         implementation("de.tr7zw:item-nbt-api:2.13.2")
-        compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     }
 }

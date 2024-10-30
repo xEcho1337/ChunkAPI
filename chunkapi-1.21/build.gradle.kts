@@ -7,6 +7,8 @@ plugins {
 dependencies {
     implementation(project(":chunkapi-core"))
     paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
+    // compileOnly("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 }
 
 java {

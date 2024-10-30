@@ -2,6 +2,7 @@ package net.echo.chunkapi.schematic;
 
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTFile;
+import io.papermc.paper.plugin.entrypoint.strategy.modern.ModernPluginLoadingStrategy;
 import net.echo.common.schematic.Schematic;
 import net.minecraft.world.level.block.Block;
 import org.bukkit.Material;
@@ -9,6 +10,7 @@ import org.bukkit.block.BlockType;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.craftbukkit.block.CraftBlockType;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.bukkit.craftbukkit.util.CraftLegacy;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,10 +72,10 @@ public class SchematicV1_21 implements Schematic {
                 for (int z = 0; z < length; z++) {
                     int i = coordinatesToIndex(x, y, z);
 
-                    System.out.println(i + " | " + data.length + " | " + x + " | " + y + " | " + z);
                     int block = data[i];
 
                     assert this.blocks != null;
+                   // System.out.println(i + " -> Block: " + block + " | From palette: " + paletteMap.get(block));
                     this.blocks[i] = paletteMap.get(block);
                 }
             }
@@ -85,9 +87,14 @@ public class SchematicV1_21 implements Schematic {
             String[] parts = input.split("\\[");
 
             if (parts.length != 2) {
-                Material material = Material.valueOf(input.replace("minecraft:", "").toUpperCase());
+                System.out.println(input + " -> " + input.replace("minecraft:", "").toUpperCase());
+                Material material = Material.getMaterial(input.replace("minecraft:", "").toUpperCase());
                 Block block = CraftBlockType.bukkitToMinecraft(material);
 
+                if (block == null) {
+                    System.out.println(input + " IS NULL!");
+                    return -1;
+                }
                 BlockType blockType = CraftBlockType.minecraftToBukkitNew(block);
                 BlockData blockData = CraftBlockData.newData(blockType, null);
 
@@ -97,15 +104,16 @@ public class SchematicV1_21 implements Schematic {
 
             String type = parts[0].replace("minecraft:", "").toUpperCase();
 
-            Material material = Material.valueOf(type);
+            Material material = Material.getMaterial(type);
             Block block = CraftBlockType.bukkitToMinecraft(material);
 
             BlockType blockType = CraftBlockType.minecraftToBukkitNew(block);
-            BlockData blockData = CraftBlockData.newData(blockType, parts[1]);
+            BlockData blockData = CraftBlockData.newData(blockType, "[" + parts[1]);
 
             System.out.println(input + " -> " + blockData.getMaterial().getId());
             return blockData.getMaterial().getId();
         } catch (IllegalArgumentException e) {
+            e.printStackTrace(System.err);
             return -1;
         }
     }

@@ -1,6 +1,6 @@
 package net.echo.common.schematic;
 
-import net.echo.common.ChunkAPI;
+import net.echo.common.AbstractChunkAPI;
 import net.echo.common.api.ChunkEditor;
 import org.bukkit.World;
 
@@ -37,7 +37,7 @@ public interface SchematicLoader {
         return future;
     }
 
-    ChunkAPI getAPI();
+    AbstractChunkAPI getAPI();
 
     ChunkEditor<?, ?> getChunkEditor(World world);
 

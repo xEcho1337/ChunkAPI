@@ -1,6 +1,6 @@
 package net.echo.chunkapi.schematic;
 
-import net.echo.common.ChunkAPI;
+import net.echo.common.AbstractChunkAPI;
 import net.echo.common.api.ChunkEditor;
 import net.echo.common.schematic.Schematic;
 import net.echo.common.schematic.SchematicLoader;
@@ -11,10 +11,10 @@ import java.io.IOException;
 
 public class SchematicLoaderV1_8 implements SchematicLoader {
 
-    private final ChunkAPI chunkAPI;
+    private final AbstractChunkAPI chunkAPI;
     private Schematic schematic;
 
-    public SchematicLoaderV1_8(ChunkAPI chunkAPI) {
+    public SchematicLoaderV1_8(AbstractChunkAPI chunkAPI) {
         this.chunkAPI = chunkAPI;
     }
 
@@ -23,7 +23,7 @@ public class SchematicLoaderV1_8 implements SchematicLoader {
     }
 
     @Override
-    public ChunkAPI getAPI() {
+    public AbstractChunkAPI getAPI() {
         return chunkAPI;
     }
 

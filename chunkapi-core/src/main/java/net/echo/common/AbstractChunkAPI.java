@@ -5,7 +5,7 @@ import net.echo.common.schematic.SchematicLoader;
 import net.echo.common.workload.ChunkWorkload;
 import org.bukkit.World;
 
-public interface ChunkAPI {
+public interface AbstractChunkAPI {
 
     /**
      * Returns a chunk editor for the given world.

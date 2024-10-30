@@ -1,6 +1,6 @@
 package net.echo.common.api;
 
-import net.echo.common.ChunkAPI;
+import net.echo.common.AbstractChunkAPI;
 import org.bukkit.Material;
 
 import java.util.concurrent.CompletableFuture;
@@ -8,10 +8,10 @@ import java.util.concurrent.CompletableFuture;
 public interface ChunkEditor<C, D> {
 
     /**
-     * Get the {@link ChunkAPI} instance
-     * @return the {@link ChunkAPI}
+     * Get the {@link AbstractChunkAPI} instance
+     * @return the {@link AbstractChunkAPI}
      */
-    ChunkAPI getChunkAPI();
+    AbstractChunkAPI getChunkAPI();
 
     /**
      * Updates a block at a given position to a given type.
@@ -22,7 +22,7 @@ public interface ChunkEditor<C, D> {
      * @param z the block z position
      * @param material the block material
      */
-    void setBlock(int x, int y, int z, Material material);
+    CompletableFuture<Boolean> setBlock(int x, int y, int z, Material material);
 
     /**
      * Updates a block at a given position to the given type.
@@ -33,16 +33,7 @@ public interface ChunkEditor<C, D> {
      * @param z the block z position
      * @param combinedId the combined id of the block
      */
-    void setBlock(int x, int y, int z, int combinedId);
-
-    /**
-     * Updates a block at a given position to air.
-     *
-     * @param x the block x position
-     * @param y the block y position
-     * @param z the block z position
-     */
-    void setAir(int x, int y, int z);
+    CompletableFuture<Boolean> setBlock(int x, int y, int z, int combinedId);
 
     /**
      * Sets the block using Minecraft internals
