@@ -3,15 +3,22 @@ package net.echo.chunkapi.schematic;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.LinearCongruentialGenerator;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockTypes;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
+import org.bukkit.block.BlockType;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.craftbukkit.block.CraftBlockState;
 import org.bukkit.craftbukkit.block.CraftBlockStates;
+import org.bukkit.craftbukkit.block.CraftBlockType;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,18 +64,10 @@ public class SchematicV1_21 implements Schematic {
             throw new IOException("Invalid schematic! No palette found!");
         }
 
-        Map<Integer, Material> paletteMap = new HashMap<>();
+        Map<Integer, Integer> paletteMap = new HashMap<>();
 
         for (String key : palette.getKeys()) {
-            System.out.println(key);
-
-            NamespacedKey namespace = NamespacedKey.fromString(key);
-
-            System.out.println(namespace);
-
-            Material material = Registry.MATERIAL.get(Objects.requireNonNull(namespace));
-
-            paletteMap.put(palette.getInteger(key), material);
+            paletteMap.put(palette.getInteger(key), stringToBlockData(key));
         }
 
         byte[] data = nbtFile.getByteArray("Data");
@@ -83,41 +82,28 @@ public class SchematicV1_21 implements Schematic {
                     int i = coordinatesToIndex(x, y, z);
 
                     int block = data[i];
-                    Material converted = paletteMap.get(block);
 
                     assert this.blocks != null;
-                    this.blocks[i] = converted.getId();
+                    this.blocks[i] = paletteMap.get(block);
                 }
             }
         }
     }
 
-    public BlockData stringToBlockData(String input) {
+    public int stringToBlockData(String input) {
         try {
             String[] parts = input.split("\\[", 2);
             String type = parts[0].replace("minecraft:", "").toUpperCase();
 
             Material material = Material.valueOf(type);
-            BlockData blockData = Blocks.AIR.defaultBlockState().createCraftBlockData();
+            Block block = CraftBlockType.bukkitToMinecraft(material);
 
-            if (parts.length > 1) {
-                String propertiesString = parts[1].replace("]", "");
-                String[] properties = propertiesString.split(",");
+            BlockType blockType = CraftBlockType.minecraftToBukkitNew(block);
+            BlockData blockData = CraftBlockData.newData(blockType, parts[1]);
 
-                for (String property : properties) {
-                    String[] keyValue = property.split("=");
-                    String key = keyValue[0].trim();
-                    String value = keyValue[1].trim();
-
-                    // blockData.getAsString("[" + key + "=" + value + "]");
-                }
-            }
-
-            return blockData;
-
+            return blockData.getMaterial().getId();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            return null;
+            return -1;
         }
     }
 
